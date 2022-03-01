@@ -1,0 +1,20 @@
+/*
+ * variables.tf
+ * Common variables to use in various Terraform files (*.tf)
+ */
+
+variable "region" {
+  default = "us-east-1"
+}
+
+variable "aws_key" {}
+
+variable "aws_secret" {}
+
+variable "project_name" {}
+
+variable "environment" {}
+
+variable "vpc_id" {}
+
+variable "vpc_subnet_ids" {}
