@@ -15,6 +15,10 @@
           engine_version = "{{resource.rds_engine_version}}"
           {% endif %}
 
+          {%- if resource.storage_type is defined %}
+          storage_type = "{{resource.storage_type}}"
+          {% endif %}
+
           {%- if resource.rds_allocated_storage is defined %}
           allocated_storage = "{{resource.rds_allocated_storage}}"
           {% endif %}
