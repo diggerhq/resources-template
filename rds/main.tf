@@ -1,7 +1,7 @@
 
 resource "aws_db_subnet_group" "rds_private_subnet_group" {
   name_prefix  = "rds_private_subnet_group"
-  subnet_ids   = [aws_subnet.private_subnet_a.id, aws_subnet.private_subnet_b.id ]
+  subnet_ids   = var.subnet_ids
 
   tags = {
     Name = "${var.project_name}-${var.environment}-rds-subnet-group"
@@ -10,7 +10,7 @@ resource "aws_db_subnet_group" "rds_private_subnet_group" {
 
 resource "aws_security_group" "rds" {
   name_prefix = "${var.project_name}-${var.environment}-rds-sg"
-  vpc_id = local.vpc.id
+  vpc_id = var.vpc_id
   description = "Digger database ${var.project_name}-${var.environment}"
 
   # Only postgres in
@@ -18,7 +18,7 @@ resource "aws_security_group" "rds" {
     from_port = 5432
     to_port = 5432
     protocol = "tcp"
-    security_groups = [aws_security_group.ecs_service_sg.id, aws_security_group.bastion_sg.id]
+    security_groups = var.security_groups_ids
   }
 
   # Allow all outbound traffic.
@@ -29,7 +29,6 @@ resource "aws_security_group" "rds" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
 
 resource "random_password" "rds_password" {
   length           = 32
@@ -54,13 +53,10 @@ resource "aws_db_instance" "digger_rds" {
 }
 
 locals {
-  database_address = module.app_rds.database_address
-  database_name = module.app_rds.database_name
-  database_username = module.app_rds.database_username
-  database_password = module.app_rds.database_password
-  database_port = module.app_rds.database_port
-  database_url = "postgres://${local.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/${local.database_name}"
-  database_endpoint = "postgres://${local.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/"
+  database_address = aws_db_instance.digger_rds.address
+  database_password = random_password.rds_password.result
+  database_port = aws_db_instance.digger_rds.port
+  database_url = "postgres://${var.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/${var.database_name}"
 }
 
 resource "aws_ssm_parameter" "database_password" {
@@ -75,14 +71,8 @@ resource "aws_ssm_parameter" "database_url" {
   type = "SecureString"
 }
 
-resource "aws_ssm_parameter" "database_endpoint" {
-  name = "${var.project_name}.${var.environment}.app_rds.database_endpoint"
-  value = local.database_endpoint
-  type = "SecureString"
-}
-
 output "database_address" {
-  value = aws_db_instance.default.address
+  value = aws_db_instance.digger_rds.address
 }
 
 output "database_name" {
@@ -94,7 +84,7 @@ output "database_username" {
 }
 
 output "database_password" {
-  value = aws_db_instance.default.password
+  value = aws_ssm_parameter.database_password.arn
 }
 
 output "database_port" {

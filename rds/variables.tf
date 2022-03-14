@@ -42,8 +42,13 @@ variable "publicly_accessible" {
   default = false
 }
 
-
 variable "snapshot_identifier" {
   default = ""
 }
+
+variable "vpc_id" {}
+
+variable "subnet_ids" {}
+
+variable "security_groups_ids" {}
 
