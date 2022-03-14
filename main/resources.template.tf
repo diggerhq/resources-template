@@ -30,6 +30,9 @@
           identifier_prefix = "${var.environment}"
           publicly_accessible = false
           subnet_ids = var.vpc_subnet_ids
+
+          project_name = var.project_name
+          environment = var.environment
         }
 
         output "DGVAR_DATABASE_URL" {
