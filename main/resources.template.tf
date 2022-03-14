@@ -28,7 +28,7 @@
           iops = "{{resource.rds_iops}}"
           {% endif %}
 
-          identifier_prefix = "${var.app}-${var.environment}"
+          identifier_prefix = "${var.environment}"
           publicly_accessible = false
           subnet_ids = var.vpc_subnet_ids
         }
