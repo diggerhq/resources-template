@@ -42,7 +42,7 @@
         module "app_redis_{{resource.name}}" {
         source = "../redis"
         }
-    {% elif reosource.resource_type == "mongodb" %}
+    {% elif resource.resource_type == "mongodb" %}
         module "app_mongodb_{{resource.name}}" {
         source = "../mongodb"
         }
