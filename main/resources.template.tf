@@ -1,5 +1,5 @@
 {% for resource in environment_config.resources %}
-    # resource
+    # resource.resource_type  {{ resource.resource_type }}
     {% if resource.resource_type == "database" %}
         module "app_rds_{{resource.name}}" {
           source = "../rds"
