@@ -8,23 +8,23 @@
           instance_class = "{{resource.rds_instance_class}}"
           {% endif %}
 
-          {%+ if resource.rds_engine is defined %}
+          {%- if resource.rds_engine is defined %}
           engine = "{{resource.rds_engine}}"
           {%+ endif %}
           
-          {%+ if resource.rds_engine_version is defined %}
+          {%- if resource.rds_engine_version is defined %}
           engine_version = "{{resource.rds_engine_version}}"
           {% endif %}
           
-          {%+ if resource.rds_allocated_storage is defined %}
+          {%- if resource.rds_allocated_storage is defined %}
           allocated_storage = "{{resource.rds_allocated_storage}}"
           {% endif %}
 
-          {%+ if resource.database_snapshot_identifier is defined %}
+          {%- if resource.database_snapshot_identifier is defined %}
           snapshot_identifier = "{{resource.rds_snapshot_identifier}}"
           {% endif %}
 
-          {%+ if resource.database_iops is defined %}
+          {%- if resource.database_iops is defined %}
           iops = "{{resource.rds_iops}}"
           {% endif %}
 
