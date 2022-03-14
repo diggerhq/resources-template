@@ -4,7 +4,7 @@
         module "app_rds_{{resource.name}}" {
           source = "../rds"
           
-          {%+ if resource.rds_instance_class is defined %}
+          {%- if resource.rds_instance_class is defined %}
           instance_class = "{{resource.rds_instance_class}}"
           {% endif %}
 
