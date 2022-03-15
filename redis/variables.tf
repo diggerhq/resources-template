@@ -9,17 +9,12 @@ variable "allocated_storage" {
   description = "The default storage for the RDS instance"
 } 
 
-/*
+
 variable "iops" {
   type        = number
   default     = 1000
   description = "The default storage for the RDS instance"
-}
-*/
-
-variable "storage_type" {
-  default = "gp2"
-}
+} 
 
 variable "identifier_prefix" {}
 
@@ -51,9 +46,5 @@ variable "snapshot_identifier" {
   default = ""
 }
 
-variable "vpc_id" {}
-
 variable "subnet_ids" {}
-
-variable "security_groups_ids" {}
 
