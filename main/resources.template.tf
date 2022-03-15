@@ -46,7 +46,7 @@
           value = module.app_rds_{{resource.name}}.database_url
         }
 
-    {% elif resource.resource_type == "redis" %}
+    {% elif (resource.resource_type | lower) == "redis" %}
         module "app_redis_{{resource.name}}" {
         source = "../redis"
         resource_name = "{{ resource.name }}"
@@ -71,7 +71,7 @@
         }
 
 
-    {% elif resource.resource_type == "mongodb" %}
+    {% elif (resource.resource_type | lower) == "mongodb" %}
         module "app_mongodb_{{resource.name}}" {
         source = "../mongodb"
         }
