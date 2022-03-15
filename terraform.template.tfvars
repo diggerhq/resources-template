@@ -1,4 +1,4 @@
-project_name = "{{app_name}}"
+project_name = "{{project}}"
 environment = "{{environment}}"
 region = "{{region}}"
 aws_key = "{{aws_key}}"
