@@ -11,46 +11,26 @@ variable "allocated_storage" {
   description = "The default storage for the RDS instance"
 } 
 
-/*
-variable "iops" {
-  type        = number
-  default     = 1000
-  description = "The default storage for the RDS instance"
-}
-*/
 
-variable "storage_type" {
-  default = "gp2"
+variable "cluster_id" {
 }
 
-variable "identifier_prefix" {}
+variable "cluster_description" {}
 
-variable "engine" {
-  default = "postgres"
+variable "redis_node_type" {
+  default = "cache.t3.micro"
 }
 
-variable "engine_version" {
-  default = "12" 
+variable "redis_port" {
+  default = 6379
 }
 
-variable "instance_class" {
-  default = "db.t3.micro"
+variable "replicas_per_node_group" {
+  default = 1
 }
 
-variable "database_name" {
-  default = "digger"
-}
-
-variable "database_username" {
-  default = "digger" 
-}
-
-variable "publicly_accessible" {
-  default = false
-}
-
-variable "snapshot_identifier" {
-  default = ""
+variable "num_node_groups" {
+  default = 2
 }
 
 variable "vpc_id" {}
