@@ -1,6 +1,6 @@
 
 resource "aws_elasticache_subnet_group" "redis_private_subnet_group" {
-  name       = "${var.environment}_${var.project_name}_${var.resource_name}_redis_subnet_group"
+  name       = "${var.environment}-${var.project_name}-${var.resource_name}-redis-subnet-group"
   subnet_ids = var.subnet_ids
 }
 
