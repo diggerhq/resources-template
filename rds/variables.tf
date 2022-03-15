@@ -9,7 +9,7 @@ variable "allocated_storage" {
   type        = number
   default     = 100
   description = "The default storage for the RDS instance"
-} 
+}
 
 /*
 variable "iops" {
@@ -30,7 +30,7 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  default = "12" 
+  default = "12"
 }
 
 variable "instance_class" {
@@ -42,7 +42,7 @@ variable "database_name" {
 }
 
 variable "database_username" {
-  default = "digger" 
+  default = "digger"
 }
 
 variable "publicly_accessible" {
