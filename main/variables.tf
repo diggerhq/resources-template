@@ -17,4 +17,8 @@ variable "environment" {}
 
 variable "vpc_id" {}
 
-variable "vpc_subnet_ids" {}
+variable "public_subnet_ids" {}
+
+variable "private_subnet_ids" {}
+
+variable "security_groups_ids" {}

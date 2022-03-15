@@ -35,8 +35,8 @@
           publicly_accessible = false
 
           vpc_id = var.vpc_id
-          subnet_ids = var.vpc_subnet_ids
-          security_groups_ids = []
+          subnet_ids = var.private_subnet_ids
+          security_groups_ids = var.security_groups_ids
 
           project_name = var.project_name
           environment = var.environment
