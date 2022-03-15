@@ -50,6 +50,8 @@
         module "app_redis_{{resource.name}}" {
         source = "../redis"
         resource_name = "{{ resource.name }}"
+        cluster_id = "${var.environment}-${var.project_name}-{{ resource.name }}"
+        cluster_description = "${var.environment}-${var.project_name}-{{ resource.name }}"
 
         {%- if resource.redis_engine_version is defined %}
         engine_version = "{{resource.redis_engine_version}}"

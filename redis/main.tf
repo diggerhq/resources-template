@@ -32,6 +32,7 @@ resource "random_password" "rds_password" {
 }
 
 resource "aws_elasticache_replication_group" "redis" {
+
   replication_group_id          = var.cluster_id
   replication_group_description = var.cluster_description
   port                          = var.redis_port
