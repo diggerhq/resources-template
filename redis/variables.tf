@@ -21,6 +21,9 @@ variable "redis_node_type" {
   default = "cache.t3.micro"
 }
 
+variable "engine_version" {
+}
+
 variable "redis_port" {
   default = 6379
 }
