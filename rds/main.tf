@@ -9,9 +9,9 @@ resource "aws_db_subnet_group" "rds_private_subnet_group" {
 }
 
 resource "aws_security_group" "rds" {
-  name_prefix = "${var.project_name}-${var.environment}-rds-sg"
+  name_prefix = "${var.project_name}-${var.environment}-${var.resource_name}-rds-sg"
   vpc_id = var.vpc_id
-  description = "Digger database ${var.project_name}-${var.environment}"
+  description = "Digger database ${var.project_name}-${var.environment}-${var.resource_name}"
 
   # Only postgres in
   ingress {
@@ -61,13 +61,13 @@ locals {
 }
 
 resource "aws_ssm_parameter" "database_password" {
-  name = "${var.project_name}.${var.environment}.app_rds.database_password"
+  name = "${var.project_name}.${var.environment}.${var.resource_name}.app_rds.database_password"
   value = local.database_password
   type = "SecureString"
 }
 
 resource "aws_ssm_parameter" "database_url" {
-  name = "${var.project_name}.${var.environment}.app_rds.database_url"
+  name = "${var.project_name}.${var.environment}.${var.resource_name}.app_rds.database_url"
   value = local.database_url
   type = "SecureString"
 }

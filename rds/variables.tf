@@ -3,6 +3,8 @@ variable "project_name" {}
 
 variable "environment" {}
 
+variable "resource_name" {}
+
 variable "allocated_storage" {
   type        = number
   default     = 100

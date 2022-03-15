@@ -2,7 +2,8 @@
     {% if (resource.resource_type | lower) == "database" %}
         module "app_rds_{{resource.name}}" {
           source = "../rds"
-          
+
+          resource_name = "{{ resource.name }}"
           {%- if resource.rds_instance_class is defined %}
           instance_class = "{{resource.rds_instance_class}}"
           {% endif %}
@@ -31,7 +32,7 @@
           iops = "{{resource.rds_iops}}"
           {% endif %}
 
-          identifier_prefix = "${var.environment}"
+          identifier_prefix = "${var.environment}-${var.project_name}-${var.resource_name}"
           publicly_accessible = false
 
           vpc_id = var.vpc_id
