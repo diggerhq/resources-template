@@ -43,7 +43,7 @@
           environment = var.environment
         }
 
-        output "DGVAR_DATABASE_{{ app_name | upper }}_URL" {
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_URL" {
           value = module.app_rds_{{resource.name}}.database_url
         }
 
