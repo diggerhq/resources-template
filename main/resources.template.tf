@@ -73,9 +73,9 @@
         }
 
 
-    {% elif (resource.resource_type | lower) == "mongodb" %}
-        module "app_mongodb_{{resource.name}}" {
-          source = "../mongodb"
+    {% elif (resource.resource_type | lower) == "docdb" %}
+        module "app_docdb_{{resource.name}}" {
+          source = "../docdb"
           resource_name = "{{ resource.name }}"
           cluster_identifier = "${var.environment}-${var.project_name}-{{ resource.name }}"
           project_name = var.project_name
@@ -83,6 +83,7 @@
           vpc_id = var.vpc_id
           subnet_ids = var.private_subnet_ids
           security_groups_ids = var.security_groups_ids
+          instance_class = "{{ resource.docdb_instance_class }}"
         }
     {% endif %}
 
