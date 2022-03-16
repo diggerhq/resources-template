@@ -48,34 +48,40 @@
 
     {% elif (resource.resource_type | lower) == "redis" %}
         module "app_redis_{{resource.name}}" {
-        source = "../redis"
-        resource_name = "{{ resource.name }}"
-        cluster_id = "${var.environment}-${var.project_name}-{{ resource.name }}"
-        cluster_description = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          source = "../redis"
+          resource_name = "{{ resource.name }}"
+          cluster_id = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          cluster_description = "${var.environment}-${var.project_name}-{{ resource.name }}"
 
-        {%- if resource.redis_engine_version is defined %}
-        engine_version = "{{resource.redis_engine_version}}"
-        {%+ endif %}
+          {%- if resource.redis_engine_version is defined %}
+          engine_version = "{{resource.redis_engine_version}}"
+          {%+ endif %}
 
-        {%- if resource.redis_instance_class is defined %}
-        redis_node_type = "{{resource.redis_instance_class}}"
-        {% endif %}
+          {%- if resource.redis_instance_class is defined %}
+          redis_node_type = "{{resource.redis_instance_class}}"
+          {% endif %}
 
-        {%- if resource.redis_number_nodes is defined %}
-        num_node_groups = "{{resource.redis_number_nodes}}"
-        {% endif %}
+          {%- if resource.redis_number_nodes is defined %}
+          num_node_groups = "{{resource.redis_number_nodes}}"
+          {% endif %}
 
-        vpc_id = var.vpc_id
-        subnet_ids = var.private_subnet_ids
-        security_groups_ids = var.security_groups_ids
-        project_name = var.project_name
-        environment = var.environment
+          vpc_id = var.vpc_id
+          subnet_ids = var.private_subnet_ids
+          security_groups_ids = var.security_groups_ids
+          project_name = var.project_name
+          environment = var.environment
         }
 
 
     {% elif (resource.resource_type | lower) == "mongodb" %}
         module "app_mongodb_{{resource.name}}" {
-        source = "../mongodb"
+          source = "../mongodb"
+          resource_name = "{{ resource.name }}"
+          atlasprojectid = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          app_name = resource.name
+          db_name = resource.name
+          project_name = var.project_name
+          environment = var.environment
         }
     {% endif %}
 
