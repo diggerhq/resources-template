@@ -46,7 +46,7 @@ resource "aws_docdb_cluster" "docdb" {
 resource "aws_docdb_cluster_instance" "default" {
   count                      = var.instances_number
   identifier                 = "${var.cluster_identifier}-${count.index + 1}"
-  cluster_identifier         = var.cluster_identifier
+  cluster_identifier         = aws_docdb_cluster.docdb.id
   apply_immediately          = true
   instance_class             = var.instance_class
   engine                     = var.engine
