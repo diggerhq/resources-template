@@ -1,15 +1,15 @@
-resource "aws_docdb_subnet_group" "default" {
+resource "aws_docdb_subnet_group" "docdb_subnet_group" {
   name        = "${var.project_name}_${var.environment}_${var.resource_name}_docdb_subnet"
   description = "Allowed subnets for DB cluster instances"
   subnet_ids  = var.subnet_ids
 }
 
-resource "random_password" "rds_password" {
+resource "random_password" "docdb_password" {
   length  = 32
   special = false
 }
 
-resource "aws_security_group" "rds" {
+resource "aws_security_group" "docdb_sg" {
   name_prefix = "${var.project_name}-${var.environment}-${var.resource_name}-docdb-sg"
   vpc_id      = var.vpc_id
   description = "Digger docdb ${var.project_name}-${var.environment}-${var.resource_name}"
@@ -35,15 +35,16 @@ resource "aws_docdb_cluster" "docdb" {
   cluster_identifier      = var.cluster_identifier
   engine                  = "docdb"
   master_username         = var.docdb_username
-  master_password         = random_password.rds_password.result
+  master_password         = random_password.docdb_password.result
   backup_retention_period = 5
   preferred_backup_window = "07:00-09:00"
   skip_final_snapshot     = true
-  vpc_security_group_ids  = [aws_security_group.rds.id]
+  vpc_security_group_ids  = [aws_security_group.docdb_sg.id]
+  db_subnet_group_name    = aws_docdb_subnet_group.docdb_subnet_group.name
 }
 
 resource "aws_ssm_parameter" "docdb_password" {
   name  = "${var.project_name}.${var.environment}.${var.resource_name}.app_docdb.database_password"
-  value = random_password.rds_password.result
+  value = random_password.docdb_password.result
   type  = "SecureString"
 }
