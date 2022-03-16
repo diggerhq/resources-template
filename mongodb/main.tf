@@ -1,3 +1,11 @@
+
+
+resource "aws_docdb_subnet_group" "default" {
+  name        = "docdb_subnet"
+  description = "Allowed subnets for DB cluster instances"
+  subnet_ids  = var.subnet_ids
+}
+
 resource "random_password" "rds_password" {
   length           = 32
   special          = false
