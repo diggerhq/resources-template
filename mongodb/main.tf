@@ -44,12 +44,13 @@ resource "aws_docdb_cluster" "docdb" {
 }
 
 resource "aws_docdb_cluster_instance" "default" {
-  count = var.instances_number
+  count                      = var.instances_number
   identifier                 = "${var.cluster_identifier}-${count.index + 1}"
   cluster_identifier         = var.cluster_identifier
   apply_immediately          = true
   instance_class             = var.instance_class
-  engine                     = var.engine_version
+  engine                     = var.engine
+  engine_version             = var.engine_version
   auto_minor_version_upgrade = true
 }
 

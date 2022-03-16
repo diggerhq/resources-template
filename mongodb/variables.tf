@@ -30,6 +30,10 @@ variable "instance_class" {
   default = "db.t3.medium"
 }
 
+variable "engine" {
+  default = "docdb"
+}
+
 variable "engine_version" {
   default = "4.0.0"
 }
