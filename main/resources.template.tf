@@ -80,6 +80,7 @@
           cluster_identifier = "${var.environment}-${var.project_name}-{{ resource.name }}"
           project_name = var.project_name
           environment = var.environment
+          vpc_id = var.vpc_id
           subnet_ids = var.private_subnet_ids
           security_groups_ids = var.security_groups_ids
         }
