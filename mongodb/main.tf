@@ -43,6 +43,16 @@ resource "aws_docdb_cluster" "docdb" {
   db_subnet_group_name    = aws_docdb_subnet_group.docdb_subnet_group.name
 }
 
+resource "aws_docdb_cluster_instance" "default" {
+  count = var.instances_number
+  identifier                 = "${var.cluster_identifier}-${count.index + 1}"
+  cluster_identifier         = var.cluster_identifier
+  apply_immediately          = true
+  instance_class             = var.instance_class
+  engine                     = var.engine_version
+  auto_minor_version_upgrade = true
+}
+
 resource "aws_ssm_parameter" "docdb_password" {
   name  = "${var.project_name}.${var.environment}.${var.resource_name}.app_docdb.database_password"
   value = random_password.docdb_password.result

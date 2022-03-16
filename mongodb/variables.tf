@@ -16,8 +16,20 @@ variable "docdb_port" {
   default = 27017
 }
 
+variable "instances_number" {
+  default = 1
+}
+
 variable "subnet_ids" {}
 
 variable "vpc_id" {}
 
 variable "security_groups_ids" {}
+
+variable "instance_class" {
+  default = "db.t3.medium"
+}
+
+variable "engine_version" {
+  default = "4.0.0"
+}
