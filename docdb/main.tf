@@ -58,3 +58,7 @@ resource "aws_ssm_parameter" "docdb_password" {
   value = random_password.docdb_password.result
   type  = "SecureString"
 }
+
+output "endpoint" {
+  value = aws_docdb_cluster.docdb.endpoint
+}

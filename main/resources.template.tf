@@ -72,6 +72,9 @@
           environment = var.environment
         }
 
+        output "DGVAR_REDIS_{{ resource.name | upper }}_URL" {
+          value = module.app_rds_{{resource.name}}.primary_endpoint_address
+        }
 
     {% elif (resource.resource_type | lower) == "docdb" %}
         module "app_docdb_{{resource.name}}" {
@@ -85,6 +88,9 @@
           security_groups_ids = var.security_groups_ids
           instance_class = "{{ resource.docdb_instance_class }}"
         }
-    {% endif %}
 
+        output "DGVAR_DOCDB_{{ resource.name | upper }}_URL" {
+          value = module.app_docdb_{{resource.name}}.endpoint
+        }
+    {% endif %}
 {% endfor %}
