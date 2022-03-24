@@ -37,7 +37,7 @@ resource "aws_elasticache_replication_group" "redis" {
   port                          = var.redis_port
   engine                        = "redis"
   node_type                     = var.redis_node_type
-  security_group_ids            = [var.security_groups_ids, aws_security_group.redis_sg.id]
+  security_group_ids            = [aws_security_group.redis_sg.id]
   #parameter_group_name =
 
   #snapshot_retention_limit = 5
