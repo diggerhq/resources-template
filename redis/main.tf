@@ -32,13 +32,12 @@ resource "random_password" "rds_password" {
 }
 
 resource "aws_elasticache_replication_group" "redis" {
-
   replication_group_id          = var.cluster_id
   replication_group_description = var.cluster_description
   port                          = var.redis_port
   engine                        = "redis"
-  #engine_version                = var.engine_version
   node_type                     = var.redis_node_type
+  security_group_ids            = [var.security_groups_ids, aws_security_group.redis_sg.id]
   #parameter_group_name =
 
   #snapshot_retention_limit = 5
