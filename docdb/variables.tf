@@ -24,7 +24,7 @@ variable "subnet_ids" {}
 
 variable "vpc_id" {}
 
-variable "security_groups_ids" {}
+variable "security_group_ids" {}
 
 variable "instance_class" {
   default = "db.t3.medium"

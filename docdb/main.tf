@@ -19,7 +19,7 @@ resource "aws_security_group" "docdb_sg" {
     from_port       = var.docdb_port
     to_port         = var.docdb_port
     protocol        = "tcp"
-    security_groups = var.security_groups_ids
+    security_groups = var.security_group_ids
   }
 
   # Allow all outbound traffic.
