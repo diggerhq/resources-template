@@ -15,7 +15,7 @@ private_subnet_ids = [
 {%- for s in environment_config.private_subnet_ids %}
   "{{ s }}",
 {% endfor %}
-]qq
+]
 
 security_group_ids = [
 {%- for s in environment_config.security_group_ids %}
