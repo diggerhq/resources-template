@@ -21,4 +21,4 @@ variable "public_subnet_ids" {}
 
 variable "private_subnet_ids" {}
 
-variable "security_groups_ids" {}
+variable "security_group_ids" {}

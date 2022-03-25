@@ -18,7 +18,7 @@ resource "aws_security_group" "rds" {
     from_port = 5432
     to_port = 5432
     protocol = "tcp"
-    security_groups = var.security_groups_ids
+    security_groups = var.security_group_ids
   }
 
   # Allow all outbound traffic.

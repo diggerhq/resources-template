@@ -14,7 +14,7 @@ resource "aws_security_group" "redis_sg" {
     from_port       = var.redis_port
     to_port         = var.redis_port
     protocol        = "tcp"
-    security_groups = var.security_groups_ids
+    security_groups = var.security_group_ids
   }
 
   # Allow all outbound traffic.

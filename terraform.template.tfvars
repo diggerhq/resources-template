@@ -15,10 +15,10 @@ private_subnet_ids = [
 {%- for s in environment_config.private_subnet_ids %}
   "{{ s }}",
 {% endfor %}
-]
+]qq
 
-security_groups_ids = [
-{%- for s in environment_config.security_groups_ids %}
+security_group_ids = [
+{%- for s in environment_config.security_group_ids %}
   "{{ s }}",
 {% endfor %}
 ]
