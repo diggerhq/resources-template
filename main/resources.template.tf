@@ -70,6 +70,7 @@
           security_group_ids = var.security_group_ids
           project_name = var.project_name
           environment = var.environment
+          tags = var.tags
         }
 
         output "DGVAR_REDIS_{{ resource.name | upper }}_URL" {

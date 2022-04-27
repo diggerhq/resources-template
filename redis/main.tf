@@ -2,6 +2,7 @@
 resource "aws_elasticache_subnet_group" "redis_private_subnet_group" {
   name       = "${var.environment}-${var.project_name}-${var.resource_name}-redis-subnet-group"
   subnet_ids = var.subnet_ids
+  tags = var.tags
 }
 
 resource "aws_security_group" "redis_sg" {
@@ -48,6 +49,8 @@ resource "aws_elasticache_replication_group" "redis" {
 
   replicas_per_node_group = var.replicas_per_node_group
   num_node_groups         = var.num_node_groups
+
+  tags = var.tags
 
 }
 
