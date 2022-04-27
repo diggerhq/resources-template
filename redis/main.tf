@@ -2,7 +2,7 @@
 resource "aws_elasticache_subnet_group" "redis_private_subnet_group" {
   name       = "${var.environment}-${var.project_name}-${var.resource_name}-redis-subnet-group"
   subnet_ids = var.subnet_ids
-  tags = var.tags
+  tags       = var.tags
 }
 
 resource "aws_security_group" "redis_sg" {
@@ -33,13 +33,12 @@ resource "random_password" "rds_password" {
 }
 
 resource "aws_elasticache_replication_group" "redis" {
-  replication_group_id          = var.cluster_id
-  replication_group_description = var.cluster_description
-  port                          = var.redis_port
-  engine                        = "redis"
-  node_type                     = var.redis_node_type
-  security_group_ids            = [aws_security_group.redis_sg.id]
-  #parameter_group_name =
+  replication_group_id = var.cluster_id
+  description          = var.cluster_description
+  port                 = var.redis_port
+  engine               = "redis"
+  node_type            = var.redis_node_type
+  security_group_ids   = [aws_security_group.redis_sg.id]
 
   #snapshot_retention_limit = 5
   #snapshot_window          = "00:00-05:00"
@@ -51,7 +50,6 @@ resource "aws_elasticache_replication_group" "redis" {
   num_node_groups         = var.num_node_groups
 
   tags = var.tags
-
 }
 
 output "primary_endpoint_address" {
