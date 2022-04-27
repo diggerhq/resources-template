@@ -46,6 +46,26 @@
           value = module.app_rds_{{resource.name}}.database_url
         }
 
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_ADDRESS" {
+          value = module.app_rds_{{resource.name}}.database_address
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_NAME" {
+          value = module.app_rds_{{resource.name}}.database_name
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_USERNAME" {
+          value = module.app_rds_{{resource.name}}.database_username
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_PASSWORD" {
+          value = module.app_rds_{{resource.name}}.database_password
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_PORT" {
+          value = module.app_rds_{{resource.name}}.database_port
+        }
+
     {% elif (resource.resource_type | lower) == "redis" %}
         module "app_redis_{{resource.name}}" {
           source = "../redis"
