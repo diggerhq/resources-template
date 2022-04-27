@@ -74,12 +74,7 @@
         }
 
         output "DGVAR_REDIS_{{ resource.name | upper }}_URL" {
-          value = module.app_redis_{{resource.name}}.primary_endpoint_address
-        }
-
-        output "DGVAR_REDIS_{{ resource.name | upper }}_REDIS" {
-          sensitive = true
-          value = module.app_redis_{{resource.name}}.redis
+          value = module.app_redis_{{resource.name}}.configuration_endpoint_address
         }
 
     {% elif (resource.resource_type | lower) == "docdb" %}
