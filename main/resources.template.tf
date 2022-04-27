@@ -78,6 +78,7 @@
         }
 
         output "DGVAR_REDIS_{{ resource.name | upper }}_REDIS" {
+          sensitive = true
           value = module.app_redis_{{resource.name}}.redis
         }
 
