@@ -27,11 +27,6 @@ resource "aws_security_group" "redis_sg" {
   }
 }
 
-resource "random_password" "rds_password" {
-  length  = 32
-  special = false
-}
-
 resource "aws_elasticache_replication_group" "redis" {
   replication_group_id = var.cluster_id
   description          = var.cluster_description
@@ -54,4 +49,8 @@ resource "aws_elasticache_replication_group" "redis" {
 
 output "primary_endpoint_address" {
   value = aws_elasticache_replication_group.redis.primary_endpoint_address
+}
+
+output "redis" {
+  value = aws_elasticache_replication_group.redis
 }

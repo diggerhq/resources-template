@@ -77,6 +77,10 @@
           value = module.app_redis_{{resource.name}}.primary_endpoint_address
         }
 
+        output "DGVAR_REDIS_{{ resource.name | upper }}_REDIS" {
+          value = module.app_redis_{{resource.name}}.redis
+        }
+
     {% elif (resource.resource_type | lower) == "docdb" %}
         module "app_docdb_{{resource.name}}" {
           source = "../docdb"
