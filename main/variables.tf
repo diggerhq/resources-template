@@ -22,3 +22,7 @@ variable "public_subnet_ids" {}
 variable "private_subnet_ids" {}
 
 variable "security_group_ids" {}
+
+variable "tags" {
+  default = {created_by: "digger"}
+}
