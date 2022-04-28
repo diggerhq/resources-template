@@ -27,30 +27,20 @@ resource "aws_security_group" "redis_sg" {
   }
 }
 
-resource "aws_elasticache_replication_group" "redis" {
-  replication_group_id = var.cluster_id
-  description          = var.cluster_description
-  port                 = var.redis_port
+resource "aws_elasticache_cluster" "dg_redis" {
+  cluster_id           = var.cluster_id
   engine               = "redis"
   node_type            = var.redis_node_type
+  num_cache_nodes      = var.num_cache_nodes
+  parameter_group_name = "default.redis6.x"
+  engine_version       = var.engine_version
+  port                 = var.redis_port
   security_group_ids   = [aws_security_group.redis_sg.id]
-
-  #snapshot_retention_limit = 5
-  #snapshot_window          = "00:00-05:00"
-
-  subnet_group_name          = aws_elasticache_subnet_group.redis_private_subnet_group.name
-  automatic_failover_enabled = true
-
-  replicas_per_node_group = var.replicas_per_node_group
-  num_node_groups         = var.num_node_groups
-
-  tags = var.tags
+  subnet_group_name    = aws_elasticache_subnet_group.redis_private_subnet_group.name
+  tags                 = var.tags
 }
 
-output "primary_endpoint_address" {
-  value = aws_elasticache_replication_group.redis.primary_endpoint_address
-}
 
-output "configuration_endpoint_address" {
-  value = aws_elasticache_replication_group.redis.configuration_endpoint_address
+output "redis_url" {
+  value = "${aws_elasticache_cluster.dg_redis.cache_nodes[0].address}:${var.redis_port}"
 }

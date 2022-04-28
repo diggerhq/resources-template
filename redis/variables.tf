@@ -28,11 +28,7 @@ variable "redis_port" {
   default = 6379
 }
 
-variable "replicas_per_node_group" {
-  default = 1
-}
-
-variable "num_node_groups" {
+variable "num_cache_nodes" {
   default = 2
 }
 
