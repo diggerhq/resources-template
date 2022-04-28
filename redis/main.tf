@@ -31,7 +31,7 @@ resource "aws_elasticache_cluster" "dg_redis" {
   cluster_id           = var.cluster_id
   engine               = "redis"
   node_type            = var.redis_node_type
-  num_cache_nodes      = var.num_cache_nodes
+  num_cache_nodes      = var.redis_number_nodes
   parameter_group_name = "default.redis6.x"
   engine_version       = var.engine_version
   port                 = var.redis_port

@@ -28,7 +28,7 @@ variable "redis_port" {
   default = 6379
 }
 
-variable "num_cache_nodes" {
+variable "redis_number_nodes" {
   default = 2
 }
 
