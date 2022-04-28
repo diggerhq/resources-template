@@ -82,7 +82,7 @@
           {% endif %}
 
           {%- if resource.redis_number_nodes is defined %}
-          num_node_groups = "{{resource.redis_number_nodes}}"
+          redis_number_nodes = "{{resource.redis_number_nodes}}"
           {% endif %}
 
           vpc_id = var.vpc_id
