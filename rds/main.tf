@@ -52,10 +52,12 @@ resource "aws_db_instance" "digger_rds" {
   vpc_security_group_ids = [aws_security_group.rds.id]
   db_subnet_group_name  = aws_db_subnet_group.rds_private_subnet_group.name
 
-  ignore_changes = [
-    backup_retention_period,
-    backup_window
-  ]
+  lifecycle {
+    ignore_changes = [
+      backup_retention_period,
+      backup_window
+    ]
+  }
 }
 
 locals {
