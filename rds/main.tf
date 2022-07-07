@@ -50,7 +50,14 @@ resource "aws_db_instance" "digger_rds" {
   skip_final_snapshot    = true
   publicly_accessible    = var.publicly_accessible
   vpc_security_group_ids = [aws_security_group.rds.id]
-  db_subnet_group_name   = aws_db_subnet_group.rds_private_subnet_group.name
+  db_subnet_group_name  = aws_db_subnet_group.rds_private_subnet_group.name
+
+  lifecycle {
+    ignore_changes = [
+      backup_retention_period,
+      backup_window
+    ]
+  }
 }
 
 locals {
