@@ -36,7 +36,8 @@
           iops = "{{resource.rds_iops}}"
           {% endif %}
 
-          identifier_prefix = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          identifier_prefix = "{{ resource.alias | default: "${var.environment}-${var.project_name}-"resource.name }}"
+
           publicly_accessible = false
 
           vpc_id = var.vpc_id
