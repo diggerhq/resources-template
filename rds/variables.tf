@@ -29,6 +29,10 @@ variable "engine" {
   default = "postgres"
 }
 
+variable "connection_schema" {
+  default = "postgres"
+}
+
 variable "engine_version" {
   default = "12"
 }
