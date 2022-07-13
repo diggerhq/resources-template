@@ -64,7 +64,7 @@ locals {
   database_address  = aws_db_instance.digger_rds.address
   database_password = random_password.rds_password.result
   database_port     = aws_db_instance.digger_rds.port
-  database_url      = "postgres://${var.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/${var.database_name}"
+  database_url      = "${var.connection_schema}://${var.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/${var.database_name}"
 }
 
 resource "aws_ssm_parameter" "database_password" {

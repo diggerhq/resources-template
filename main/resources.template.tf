@@ -12,6 +12,10 @@
           engine = "{{resource.rds_engine}}"
           {%+ endif %}
 
+          {%- if resource.connection_schema is defined %}
+          connection_schema = "{{resource.connection_schema}}"
+          {%+ endif %}
+          
           {%- if resource.rds_engine_version is defined %}
           engine_version = "{{resource.rds_engine_version}}"
           {% endif %}
