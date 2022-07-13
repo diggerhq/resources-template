@@ -36,7 +36,11 @@
           iops = "{{resource.rds_iops}}"
           {% endif %}
 
-          identifier_prefix = "{{ resource.alias | default: "${var.environment}-${var.project_name}-"resource.name }}"
+          {%- if resource.alias %}
+          identifier_prefix = "{{ resource.alias }}"
+          {% else %}
+          identifier_prefix = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          {% endif %}
 
           publicly_accessible = false
 
@@ -49,6 +53,26 @@
 
         output "DGVAR_DATABASE_{{ resource.name | upper }}_URL" {
           value = module.app_rds_{{resource.name}}.database_url
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_ADDRESS" {
+          value = module.app_rds_{{resource.name}}.database_address
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_NAME" {
+          value = module.app_rds_{{resource.name}}.database_name
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_USERNAME" {
+          value = module.app_rds_{{resource.name}}.database_username
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_PASSWORD" {
+          value = module.app_rds_{{resource.name}}.database_password
+        }
+
+        output "DGVAR_DATABASE_{{ resource.name | upper }}_PORT" {
+          value = module.app_rds_{{resource.name}}.database_port
         }
 
     {% elif (resource.resource_type | lower) == "redis" %}
@@ -67,7 +91,7 @@
           {% endif %}
 
           {%- if resource.redis_number_nodes is defined %}
-          num_node_groups = "{{resource.redis_number_nodes}}"
+          redis_number_nodes = "{{resource.redis_number_nodes}}"
           {% endif %}
 
           vpc_id = var.vpc_id
@@ -75,10 +99,11 @@
           security_group_ids = var.security_group_ids
           project_name = var.project_name
           environment = var.environment
+          tags = var.tags
         }
 
         output "DGVAR_REDIS_{{ resource.name | upper }}_URL" {
-          value = module.app_redis_{{resource.name}}.primary_endpoint_address
+          value = module.app_redis_{{resource.name}}.redis_url
         }
 
     {% elif (resource.resource_type | lower) == "docdb" %}
