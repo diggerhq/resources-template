@@ -35,8 +35,11 @@
           {%- if resource.database_iops is defined %}
           iops = "{{resource.rds_iops}}"
           {% endif %}
-
+          {%- if resource.alias %}
+          identifier_prefix = "{{ resource.alias }}"
+          {% else %}
           identifier_prefix = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          {% endif %}
           publicly_accessible = false
 
           vpc_id = var.vpc_id
