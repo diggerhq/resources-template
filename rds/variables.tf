@@ -29,6 +29,9 @@ variable "engine" {
   default = "postgres"
 }
 
+variable "ingress_port" {
+}
+
 variable "connection_schema" {
   default = "postgres"
 }
