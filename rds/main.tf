@@ -15,8 +15,8 @@ resource "aws_security_group" "rds" {
 
   # Only postgres in
   ingress {
-    from_port       = 5432
-    to_port         = 5432
+    from_port       = var.ingress_port
+    to_port         = var.ingress_port
     protocol        = "tcp"
     security_groups = var.security_group_ids
   }

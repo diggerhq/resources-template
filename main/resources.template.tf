@@ -12,6 +12,12 @@
           engine = "{{resource.rds_engine}}"
           {%+ endif %}
 
+          {%- if resource.rds_engine == "postgres" %}
+          ingress_port = 5432
+          {%+ elif resource.rds_engine == "mysql" %}
+          ingress_port = 3306
+          {%+ endif %}
+
           {%- if resource.connection_schema is defined %}
           connection_schema = "{{resource.connection_schema}}"
           {%+ endif %}
