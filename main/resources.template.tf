@@ -12,6 +12,12 @@
           engine = "{{resource.rds_engine}}"
           {%+ endif %}
 
+          {%- if resource.rds_engine == "postgres" %}
+          ingress_port = 5432
+          {%+ elif resource.rds_engine == "mysql" %}
+          ingress_port = 3306
+          {%+ endif %}
+
           {%- if resource.connection_schema is defined %}
           connection_schema = "{{resource.connection_schema}}"
           {%+ endif %}
@@ -36,7 +42,14 @@
           iops = "{{resource.rds_iops}}"
           {% endif %}
 
-          identifier_prefix = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          {%- if resource.name %}
+          identifier = "{{resource.name}}"
+          {% endif %}
+
+          {%- if resource.db_name %}
+          database_name = "{{resource.db_name}}"
+          {% endif %}
+
           publicly_accessible = false
 
           vpc_id = var.vpc_id

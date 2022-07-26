@@ -1,7 +1,7 @@
 
 resource "aws_db_subnet_group" "rds_private_subnet_group" {
-  name_prefix  = "rds_private_subnet_group"
-  subnet_ids   = var.subnet_ids
+  name_prefix = "rds_private_subnet_group"
+  subnet_ids  = var.subnet_ids
 
   tags = {
     Name = "${var.project_name}-${var.environment}-rds-subnet-group"
@@ -10,47 +10,46 @@ resource "aws_db_subnet_group" "rds_private_subnet_group" {
 
 resource "aws_security_group" "rds" {
   name_prefix = "${var.project_name}-${var.environment}-${var.resource_name}-rds-sg"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
   description = "Digger database ${var.project_name}-${var.environment}-${var.resource_name}"
 
   # Only postgres in
   ingress {
-    from_port = 5432
-    to_port = 5432
-    protocol = "tcp"
+    from_port       = var.ingress_port
+    to_port         = var.ingress_port
+    protocol        = "tcp"
     security_groups = var.security_group_ids
   }
 
   # Allow all outbound traffic.
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "random_password" "rds_password" {
-  length           = 32
-  special          = false
+  length  = 32
+  special = false
 }
 
 resource "aws_db_instance" "digger_rds" {
-  identifier_prefix    = var.identifier_prefix
-  allocated_storage    = var.allocated_storage
-  #iops                 = var.iops
-  storage_type         = var.storage_type
-  engine               = var.engine
-  engine_version       = var.engine_version
-  instance_class       = var.instance_class
-  name                 = var.database_name
-  username             = var.database_username
-  password             = random_password.rds_password.result
-  snapshot_identifier  = var.snapshot_identifier
-  skip_final_snapshot  = true
-  publicly_accessible  = var.publicly_accessible
+  identifier             = var.identifier
+  db_name                = var.database_name
+  allocated_storage      = var.allocated_storage
+  storage_type           = var.storage_type
+  engine                 = var.engine
+  engine_version         = var.engine_version
+  instance_class         = var.instance_class
+  username               = var.database_username
+  password               = random_password.rds_password.result
+  snapshot_identifier    = var.snapshot_identifier
+  skip_final_snapshot    = true
+  publicly_accessible    = var.publicly_accessible
   vpc_security_group_ids = [aws_security_group.rds.id]
-  db_subnet_group_name  = aws_db_subnet_group.rds_private_subnet_group.name
+  db_subnet_group_name   = aws_db_subnet_group.rds_private_subnet_group.name
 
   lifecycle {
     ignore_changes = [
@@ -61,22 +60,22 @@ resource "aws_db_instance" "digger_rds" {
 }
 
 locals {
-  database_address = aws_db_instance.digger_rds.address
+  database_address  = aws_db_instance.digger_rds.address
   database_password = random_password.rds_password.result
-  database_port = aws_db_instance.digger_rds.port
-  database_url = "${var.connection_schema}://${var.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/${var.database_name}"
+  database_port     = aws_db_instance.digger_rds.port
+  database_url      = "${var.connection_schema}://${var.database_username}:${local.database_password}@${local.database_address}:${local.database_port}/${var.database_name}"
 }
 
 resource "aws_ssm_parameter" "database_password" {
-  name = "${var.project_name}.${var.environment}.${var.resource_name}.app_rds.database_password"
+  name  = "${var.project_name}.${var.environment}.${var.resource_name}.app_rds.database_password"
   value = local.database_password
-  type = "SecureString"
+  type  = "SecureString"
 }
 
 resource "aws_ssm_parameter" "database_url" {
-  name = "${var.project_name}.${var.environment}.${var.resource_name}.app_rds.database_url"
+  name  = "${var.project_name}.${var.environment}.${var.resource_name}.app_rds.database_url"
   value = local.database_url
-  type = "SecureString"
+  type  = "SecureString"
 }
 
 output "database_address" {
