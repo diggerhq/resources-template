@@ -23,7 +23,7 @@ variable "storage_type" {
   default = "gp2"
 }
 
-variable "identifier_prefix" {}
+variable "identifier" {}
 
 variable "engine" {
   default = "postgres"

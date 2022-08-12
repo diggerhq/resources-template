@@ -36,21 +36,20 @@ resource "random_password" "rds_password" {
 }
 
 resource "aws_db_instance" "digger_rds" {
-  identifier_prefix = var.identifier_prefix
-  allocated_storage = var.allocated_storage
-  #iops                 = var.iops
+  identifier             = var.identifier
+  db_name                = var.database_name
+  allocated_storage      = var.allocated_storage
   storage_type           = var.storage_type
   engine                 = var.engine
   engine_version         = var.engine_version
   instance_class         = var.instance_class
-  db_name                = var.database_name
   username               = var.database_username
   password               = random_password.rds_password.result
   snapshot_identifier    = var.snapshot_identifier
   skip_final_snapshot    = true
   publicly_accessible    = var.publicly_accessible
   vpc_security_group_ids = [aws_security_group.rds.id]
-  db_subnet_group_name  = aws_db_subnet_group.rds_private_subnet_group.name
+  db_subnet_group_name   = aws_db_subnet_group.rds_private_subnet_group.name
 
   lifecycle {
     ignore_changes = [
