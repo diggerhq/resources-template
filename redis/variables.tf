@@ -28,11 +28,7 @@ variable "redis_port" {
   default = 6379
 }
 
-variable "replicas_per_node_group" {
-  default = 1
-}
-
-variable "num_node_groups" {
+variable "redis_number_nodes" {
   default = 2
 }
 
@@ -41,4 +37,6 @@ variable "vpc_id" {}
 variable "subnet_ids" {}
 
 variable "security_group_ids" {}
+
+variable "tags" {}
 
