@@ -55,8 +55,7 @@
           vpc_id = var.vpc_id
           subnet_ids = var.private_subnet_ids
           security_group_ids = var.security_group_ids
-          project_name = var.project_name
-          environment = var.environment
+          aws_app_identifier = var.aws_app_identifier
         }
 
         output "DGVAR_DATABASE_{{ resource.name | upper }}_URL" {
@@ -87,8 +86,8 @@
         module "app_redis_{{resource.name}}" {
           source = "../redis"
           resource_name = "{{ resource.name }}"
-          cluster_id = "${var.environment}-${var.project_name}-{{ resource.name }}"
-          cluster_description = "${var.environment}-${var.project_name}-{{ resource.name }}"
+          cluster_id = "${var.aws_app_identifier}-{{ resource.name }}"
+          cluster_description = "${var.aws_app_identifier}-{{ resource.name }}"
 
           {%- if resource.redis_engine_version is defined %}
           engine_version = "{{resource.redis_engine_version}}"
@@ -102,11 +101,10 @@
           redis_number_nodes = "{{resource.redis_number_nodes}}"
           {% endif %}
 
+          aws_app_identifier = var.aws_app_identifier
           vpc_id = var.vpc_id
           subnet_ids = var.private_subnet_ids
           security_group_ids = var.security_group_ids
-          project_name = var.project_name
-          environment = var.environment
           tags = var.tags
         }
 
@@ -118,13 +116,12 @@
         module "app_docdb_{{resource.name}}" {
           source = "../docdb"
           resource_name = "{{ resource.name }}"
-          cluster_identifier = "${var.environment}-${var.project_name}-{{ resource.name }}"
-          project_name = var.project_name
-          environment = var.environment
+          cluster_identifier = "${var.aws_app_identifier}-{{ resource.name }}"
           vpc_id = var.vpc_id
           subnet_ids = var.private_subnet_ids
           security_group_ids = var.security_group_ids
           instance_class = "{{ resource.docdb_instance_class }}"
+          aws_app_identifier = var.aws_app_identifier
         }
 
         output "DGVAR_DOCDB_{{ resource.name | upper }}_URL" {

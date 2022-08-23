@@ -1,9 +1,6 @@
-
-variable "project_name" {}
-
-variable "environment" {}
-
 variable "resource_name" {}
+
+variable "aws_app_identifier" {}
 
 variable "allocated_storage" {
   type        = number

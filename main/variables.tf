@@ -11,11 +11,9 @@ variable "aws_key" {}
 
 variable "aws_secret" {}
 
-variable "project_name" {}
-
-variable "environment" {}
-
 variable "vpc_id" {}
+
+variable "aws_app_identifier" {}
 
 variable "public_subnet_ids" {}
 

@@ -1,14 +1,14 @@
 
 resource "aws_elasticache_subnet_group" "redis_private_subnet_group" {
-  name       = "${var.environment}-${var.project_name}-${var.resource_name}-redis-subnet-group"
+  name       = "${var.aws_app_identifier}-redis-subnet-group"
   subnet_ids = var.subnet_ids
   tags       = var.tags
 }
 
 resource "aws_security_group" "redis_sg" {
-  name_prefix = "${var.project_name}-${var.environment}-${var.resource_name}-redis-sg"
+  name_prefix = "${var.aws_app_identifier}-redis-sg"
   vpc_id      = var.vpc_id
-  description = "Digger Redis ${var.project_name}-${var.environment}-${var.resource_name}"
+  description = "Digger Redis ${var.aws_app_identifier}"
 
   # Only redis in
   ingress {
