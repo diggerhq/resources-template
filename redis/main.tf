@@ -28,6 +28,7 @@ resource "aws_security_group" "redis_sg" {
 }
 
 resource "aws_elasticache_cluster" "dg_redis" {
+  count                = var.redis_number_nodes > 1 ? 0 : 1
   cluster_id           = var.cluster_id
   engine               = "redis"
   node_type            = var.redis_node_type
@@ -40,7 +41,20 @@ resource "aws_elasticache_cluster" "dg_redis" {
   tags                 = var.tags
 }
 
+resource "aws_elasticache_replication_group" "dg_redis" {
+  count                       = var.redis_number_nodes > 1 ? 1 : 0
+  automatic_failover_enabled  = true
+  replication_group_id        = var.cluster_id
+  description                 = var.cluster_id
+  node_type                   = var.redis_node_type
+  num_cache_clusters          = var.redis_number_nodes
+  parameter_group_name        = "default.redis6.x"
+  security_group_ids          = [aws_security_group.redis_sg.id]
+  subnet_group_name           = aws_elasticache_subnet_group.redis_private_subnet_group.name
+  tags                        = var.tags
+  port                        = 6379
+}
 
 output "redis_url" {
-  value = "${aws_elasticache_cluster.dg_redis.cache_nodes[0].address}:${var.redis_port}"
+  value = var.redis_number_nodes > 1 ? "${aws_elasticache_replication_group.dg_redis[0].primary_endpoint_address}:${var.redis_port}" : "${aws_elasticache_cluster.dg_redis[0].cache_nodes[0].address}:${var.redis_port}"
 }
