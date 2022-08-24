@@ -1,9 +1,4 @@
-
-variable "project_name" {}
-
-variable "environment" {}
-
-variable "resource_name" {}
+variable "aws_app_identifier" {}
 
 variable "cluster_identifier" {
 }

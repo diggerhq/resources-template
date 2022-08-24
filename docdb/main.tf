@@ -1,5 +1,5 @@
 resource "aws_docdb_subnet_group" "docdb_subnet_group" {
-  name        = "${var.project_name}_${var.environment}_${var.resource_name}_docdb_subnet"
+  name        = "${var.aws_app_identifier}_docdb_subnet"
   description = "Allowed subnets for DB cluster instances"
   subnet_ids  = var.subnet_ids
 }
@@ -10,9 +10,9 @@ resource "random_password" "docdb_password" {
 }
 
 resource "aws_security_group" "docdb_sg" {
-  name_prefix = "${var.project_name}-${var.environment}-${var.resource_name}-docdb-sg"
+  name_prefix = "${var.aws_app_identifier}-docdb-sg"
   vpc_id      = var.vpc_id
-  description = "Digger docdb ${var.project_name}-${var.environment}-${var.resource_name}"
+  description = "Digger docdb ${var.aws_app_identifier}"
 
   # Only postgres in
   ingress {
@@ -54,7 +54,7 @@ resource "aws_docdb_cluster_instance" "default" {
 }
 
 resource "aws_ssm_parameter" "docdb_password" {
-  name  = "${var.project_name}.${var.environment}.${var.resource_name}.app_docdb.database_password"
+  name  = "${var.aws_app_identifier}.app_docdb.database_password"
   value = random_password.docdb_password.result
   type  = "SecureString"
 }
