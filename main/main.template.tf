@@ -29,7 +29,7 @@ provider "aws" {
   {% endif %}  
   default_tags {
     tags = {
-      digger_identifier = "{{network_name}}"
+      digger_identifier = "{{aws_app_identifier}}"
     }
   }
 }
